@@ -1,0 +1,214 @@
+[
+  {
+    "id": "stb-airtel-digital-tv",
+    "brand": "Airtel Digital TV",
+    "category": "SET_TOP_BOX",
+    "model": "HD / Xstream Smart Box",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-airtel-digital-tv.json"
+  },
+  {
+    "id": "stb-dd-free-dish",
+    "brand": "DD Free Dish",
+    "category": "SET_TOP_BOX",
+    "model": "MPEG-2 / MPEG-4 Free-to-Air STB (Solid / Melbon / Catvision)",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-dd-free-dish.json"
+  },
+  {
+    "id": "stb-den-networks",
+    "brand": "Den Networks",
+    "category": "SET_TOP_BOX",
+    "model": "HD / Digital Cable STB",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-den-networks.json"
+  },
+  {
+    "id": "stb-dish-tv",
+    "brand": "Dish TV",
+    "category": "SET_TOP_BOX",
+    "model": "DishNXT HD / Dish SMRT Hub",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-dish-tv.json"
+  },
+  {
+    "id": "stb-gtpl-cable",
+    "brand": "GTPL",
+    "category": "SET_TOP_BOX",
+    "model": "GTPL KCBPL Digital Cable STB",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-gtpl-cable.json"
+  },
+  {
+    "id": "stb-hathway-cable",
+    "brand": "Hathway",
+    "category": "SET_TOP_BOX",
+    "model": "HD / Playbox Android STB",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-hathway-cable.json"
+  },
+  {
+    "id": "stb-sun-direct",
+    "brand": "Sun Direct",
+    "category": "SET_TOP_BOX",
+    "model": "Sun Direct DTH HD",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-sun-direct.json"
+  },
+  {
+    "id": "stb-tata-play",
+    "brand": "Tata Play",
+    "category": "SET_TOP_BOX",
+    "model": "HD / Binge+ / SD Set-Top Box",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-tata-play.json"
+  },
+  {
+    "id": "stb-videocon-d2h",
+    "brand": "d2h",
+    "category": "SET_TOP_BOX",
+    "model": "Videocon d2h HD / 4K",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "stb-videocon-d2h.json"
+  },
+  {
+    "id": "tv-generic-ir",
+    "brand": "Generic",
+    "category": "TV",
+    "model": "Standard Indian CRT & LED TV (Onida / Micromax / Lloyd / Videocon)",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR"
+    ],
+    "file": "tv-generic-ir.json"
+  },
+  {
+    "id": "tv-lg-webos",
+    "brand": "LG",
+    "category": "TV",
+    "model": "webOS Smart TV (SSAP / NEC Hybrid)",
+    "region": "Global",
+    "version": "1.0.0",
+    "supported_transports": [
+      "WIFI",
+      "IR"
+    ],
+    "file": "tv-lg-webos.json"
+  },
+  {
+    "id": "tv-oneplus-smart",
+    "brand": "OnePlus",
+    "category": "TV",
+    "model": "OnePlus TV (OxygenPlay / BLE / Android TV)",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "WIFI",
+      "BLUETOOTH"
+    ],
+    "file": "tv-oneplus-smart.json"
+  },
+  {
+    "id": "tv-samsung-smart",
+    "brand": "Samsung",
+    "category": "TV",
+    "model": "Smart TV (Tizen / IR Hybrid)",
+    "region": "Global",
+    "version": "1.0.0",
+    "supported_transports": [
+      "WIFI",
+      "IR"
+    ],
+    "file": "tv-samsung-smart.json"
+  },
+  {
+    "id": "tv-sony-bravia",
+    "brand": "Sony",
+    "category": "TV",
+    "model": "Bravia (IRCC-IP / SIRC Hybrid)",
+    "region": "Global",
+    "version": "1.0.0",
+    "supported_transports": [
+      "WIFI",
+      "IR"
+    ],
+    "file": "tv-sony-bravia.json"
+  },
+  {
+    "id": "tv-tcl-android",
+    "brand": "TCL",
+    "category": "TV",
+    "model": "TCL / iFFALCON Android TV",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR",
+      "WIFI"
+    ],
+    "file": "tv-tcl-android.json"
+  },
+  {
+    "id": "tv-vu-cinema",
+    "brand": "Vu",
+    "category": "TV",
+    "model": "Cinema TV / GloLED",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR",
+      "WIFI"
+    ],
+    "file": "tv-vu-cinema.json"
+  },
+  {
+    "id": "tv-xiaomi-patchwall",
+    "brand": "Xiaomi",
+    "category": "TV",
+    "model": "Mi TV / Redmi TV (PatchWall / Android TV)",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "WIFI",
+      "BLUETOOTH",
+      "IR"
+    ],
+    "file": "tv-xiaomi-patchwall.json"
+  }
+]

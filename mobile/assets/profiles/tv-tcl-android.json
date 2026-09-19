@@ -1,0 +1,36 @@
+{
+  "id": "tv-tcl-android",
+  "brand": "TCL",
+  "category": "TV",
+  "model": "TCL / iFFALCON Android TV",
+  "region": "India",
+  "version": "1.0.0",
+  "supported_transports": ["IR", "WIFI"],
+  "ir_config": {
+    "protocol": "NEC",
+    "carrier_frequency_hz": 38000,
+    "customer_code": "0x40"
+  },
+  "wifi_config": {
+    "adapter": "android_tv",
+    "default_port": 6466,
+    "auth_required": true,
+    "auth_type": "PIN",
+    "discovery_service": "_androidtvremote2._tcp.local"
+  },
+  "commands": {
+    "POWER": { "label": "Power", "ir_hex": "0x40BF12ED", "wifi_payload": { "key_code": 26 } },
+    "VOLUME_UP": { "label": "Volume +", "ir_hex": "0x40BF1AE5", "wifi_payload": { "key_code": 24 } },
+    "VOLUME_DOWN": { "label": "Volume -", "ir_hex": "0x40BF1EE1", "wifi_payload": { "key_code": 25 } },
+    "MUTE": { "label": "Mute", "ir_hex": "0x40BF16E9", "wifi_payload": { "key_code": 164 } },
+    "CHANNEL_UP": { "label": "Channel +", "ir_hex": "0x40BF18E7", "wifi_payload": { "key_code": 166 } },
+    "CHANNEL_DOWN": { "label": "Channel -", "ir_hex": "0x40BF1CE3", "wifi_payload": { "key_code": 167 } },
+    "DPAD_UP": { "label": "Up", "ir_hex": "0x40BF52AD", "wifi_payload": { "key_code": 19 } },
+    "DPAD_DOWN": { "label": "Down", "ir_hex": "0x40BF13EC", "wifi_payload": { "key_code": 20 } },
+    "DPAD_LEFT": { "label": "Left", "ir_hex": "0x40BF936C", "wifi_payload": { "key_code": 21 } },
+    "DPAD_RIGHT": { "label": "Right", "ir_hex": "0x40BF53AC", "wifi_payload": { "key_code": 22 } },
+    "DPAD_OK": { "label": "OK", "ir_hex": "0x40BF738C", "wifi_payload": { "key_code": 23 } },
+    "HOME": { "label": "Home", "ir_hex": "0x40BFF20D", "wifi_payload": { "key_code": 3 } },
+    "BACK": { "label": "Back", "ir_hex": "0x40BF32CD", "wifi_payload": { "key_code": 4 } }
+  }
+}

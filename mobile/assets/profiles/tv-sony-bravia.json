@@ -1,0 +1,43 @@
+{
+  "id": "tv-sony-bravia",
+  "brand": "Sony",
+  "category": "TV",
+  "model": "Bravia (IRCC-IP / SIRC Hybrid)",
+  "region": "Global",
+  "version": "1.0.0",
+  "supported_transports": ["WIFI", "IR"],
+  "ir_config": {
+    "protocol": "SONY_SIRC",
+    "carrier_frequency_hz": 40000,
+    "customer_code": "0x01"
+  },
+  "wifi_config": {
+    "adapter": "sony_ircc",
+    "default_port": 80,
+    "auth_required": true,
+    "auth_type": "PSK",
+    "discovery_service": "urn:schemas-sony-com:service:IRCC:1"
+  },
+  "commands": {
+    "POWER": { "label": "Power", "ir_hex": "0xA90", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAAVAw==" } },
+    "VOLUME_UP": { "label": "Volume +", "ir_hex": "0x490", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAASAw==" } },
+    "VOLUME_DOWN": { "label": "Volume -", "ir_hex": "0xC90", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAATAw==" } },
+    "MUTE": { "label": "Mute", "ir_hex": "0x290", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAAUAw==" } },
+    "CHANNEL_UP": { "label": "Channel +", "ir_hex": "0x090", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAAQAw==" } },
+    "CHANNEL_DOWN": { "label": "Channel -", "ir_hex": "0x890", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAARAw==" } },
+    "DPAD_UP": { "label": "Up", "ir_hex": "0x2F0", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAB0Aw==" } },
+    "DPAD_DOWN": { "label": "Down", "ir_hex": "0xAF0", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAB1Aw==" } },
+    "DPAD_LEFT": { "label": "Left", "ir_hex": "0x2D0", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAA0Aw==" } },
+    "DPAD_RIGHT": { "label": "Right", "ir_hex": "0xCD0", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAAzAw==" } },
+    "DPAD_OK": { "label": "OK", "ir_hex": "0xA70", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAABlAw==" } },
+    "HOME": { "label": "Home", "ir_hex": "0x070", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAABgAw==" } },
+    "BACK": { "label": "Back", "ir_hex": "0x62E", "wifi_payload": { "ircc_code": "AAAAAgAAAJcAAAAjAw==" } },
+    "SOURCE": { "label": "Input", "ir_hex": "0xA50", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAAlAw==" } },
+    "NETFLIX": { "label": "Netflix", "wifi_payload": { "ircc_code": "AAAAAgAAABoAAAB8Aw==" } },
+    "YOUTUBE": { "label": "YouTube", "wifi_payload": { "ircc_code": "AAAAAgAAAMQAAABHAw==" } },
+    "NUM_0": { "label": "0", "ir_hex": "0x910", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAAJAw==" } },
+    "NUM_1": { "label": "1", "ir_hex": "0x010", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAAAAw==" } },
+    "NUM_2": { "label": "2", "ir_hex": "0x810", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAABAw==" } },
+    "NUM_3": { "label": "3", "ir_hex": "0x410", "wifi_payload": { "ircc_code": "AAAAAQAAAAEAAAACAw==" } }
+  }
+}

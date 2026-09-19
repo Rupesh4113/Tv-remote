@@ -1,0 +1,29 @@
+{
+  "id": "stb-hathway-cable",
+  "brand": "Hathway",
+  "category": "SET_TOP_BOX",
+  "model": "HD / Playbox Android STB",
+  "region": "India",
+  "version": "1.0.0",
+  "supported_transports": ["IR"],
+  "ir_config": {
+    "protocol": "NEC",
+    "carrier_frequency_hz": 38000,
+    "customer_code": "0x01FE"
+  },
+  "commands": {
+    "POWER": { "label": "Power", "ir_hex": "0x01FE48B7" },
+    "VOLUME_UP": { "label": "Volume +", "ir_hex": "0x01FE58A7" },
+    "VOLUME_DOWN": { "label": "Volume -", "ir_hex": "0x01FE7887" },
+    "MUTE": { "label": "Mute", "ir_hex": "0x01FE08F7" },
+    "CHANNEL_UP": { "label": "Channel +", "ir_hex": "0x01FE20DF" },
+    "CHANNEL_DOWN": { "label": "Channel -", "ir_hex": "0x01FEA05F" },
+    "GUIDE": { "label": "EPG", "ir_hex": "0x01FE609F" },
+    "MENU": { "label": "Menu", "ir_hex": "0x01FEE01F" },
+    "DPAD_UP": { "label": "Up", "ir_hex": "0x01FE10EF" },
+    "DPAD_DOWN": { "label": "Down", "ir_hex": "0x01FE906F" },
+    "DPAD_LEFT": { "label": "Left", "ir_hex": "0x01FEB04F" },
+    "DPAD_RIGHT": { "label": "Right", "ir_hex": "0x01FE30CF" },
+    "DPAD_OK": { "label": "OK", "ir_hex": "0x01FED02F" }
+  }
+}

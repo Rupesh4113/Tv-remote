@@ -1,0 +1,33 @@
+{
+  "id": "stb-sun-direct",
+  "brand": "Sun Direct",
+  "category": "SET_TOP_BOX",
+  "model": "Sun Direct DTH HD",
+  "region": "India",
+  "version": "1.0.0",
+  "supported_transports": ["IR"],
+  "ir_config": {
+    "protocol": "NEC",
+    "carrier_frequency_hz": 38000,
+    "customer_code": "0x00FE"
+  },
+  "commands": {
+    "POWER": { "label": "Power", "ir_hex": "0x00FE48B7" },
+    "VOLUME_UP": { "label": "Volume +", "ir_hex": "0x00FE58A7" },
+    "VOLUME_DOWN": { "label": "Volume -", "ir_hex": "0x00FE7887" },
+    "MUTE": { "label": "Mute", "ir_hex": "0x00FE08F7" },
+    "CHANNEL_UP": { "label": "Channel +", "ir_hex": "0x00FE20DF" },
+    "CHANNEL_DOWN": { "label": "Channel -", "ir_hex": "0x00FEA05F" },
+    "GUIDE": { "label": "EPG / Guide", "ir_hex": "0x00FE609F" },
+    "MENU": { "label": "Menu", "ir_hex": "0x00FEE01F" },
+    "DPAD_UP": { "label": "Up", "ir_hex": "0x00FE10EF" },
+    "DPAD_DOWN": { "label": "Down", "ir_hex": "0x00FE906F" },
+    "DPAD_LEFT": { "label": "Left", "ir_hex": "0x00FEB04F" },
+    "DPAD_RIGHT": { "label": "Right", "ir_hex": "0x00FE30CF" },
+    "DPAD_OK": { "label": "OK", "ir_hex": "0x00FED02F" },
+    "COLOR_RED": { "label": "Red", "ir_hex": "0x00FE32CD" },
+    "COLOR_GREEN": { "label": "Green", "ir_hex": "0x00FE827D" },
+    "COLOR_YELLOW": { "label": "Yellow", "ir_hex": "0x00FE629D" },
+    "COLOR_BLUE": { "label": "Blue", "ir_hex": "0x00FE22DD" }
+  }
+}

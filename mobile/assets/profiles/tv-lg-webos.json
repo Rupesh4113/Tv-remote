@@ -1,0 +1,40 @@
+{
+  "id": "tv-lg-webos",
+  "brand": "LG",
+  "category": "TV",
+  "model": "webOS Smart TV (SSAP / NEC Hybrid)",
+  "region": "Global",
+  "version": "1.0.0",
+  "supported_transports": ["WIFI", "IR"],
+  "ir_config": {
+    "protocol": "NEC",
+    "carrier_frequency_hz": 38000,
+    "customer_code": "0x04FB"
+  },
+  "wifi_config": {
+    "adapter": "lg_webos",
+    "default_port": 3000,
+    "auth_required": true,
+    "auth_type": "PIN",
+    "discovery_service": "urn:lge-com:service:webos-second-screen:1"
+  },
+  "commands": {
+    "POWER": { "label": "Power", "ir_hex": "0x20DF10EF", "wifi_payload": { "uri": "ssap://system/turnOff" } },
+    "VOLUME_UP": { "label": "Volume +", "ir_hex": "0x20DF40BF", "wifi_payload": { "uri": "ssap://audio/volumeUp" } },
+    "VOLUME_DOWN": { "label": "Volume -", "ir_hex": "0x20DFC03F", "wifi_payload": { "uri": "ssap://audio/volumeDown" } },
+    "MUTE": { "label": "Mute", "ir_hex": "0x20DF906F", "wifi_payload": { "uri": "ssap://audio/setMute", "payload": { "mute": true } } },
+    "CHANNEL_UP": { "label": "Channel +", "ir_hex": "0x20DF00FF", "wifi_payload": { "uri": "ssap://tv/channelUp" } },
+    "CHANNEL_DOWN": { "label": "Channel -", "ir_hex": "0x20DF807F", "wifi_payload": { "uri": "ssap://tv/channelDown" } },
+    "DPAD_UP": { "label": "Up", "ir_hex": "0x20DF02FD", "wifi_payload": { "key": "UP" } },
+    "DPAD_DOWN": { "label": "Down", "ir_hex": "0x20DF827D", "wifi_payload": { "key": "DOWN" } },
+    "DPAD_LEFT": { "label": "Left", "ir_hex": "0x20DFE01F", "wifi_payload": { "key": "LEFT" } },
+    "DPAD_RIGHT": { "label": "Right", "ir_hex": "0x20DF609F", "wifi_payload": { "key": "RIGHT" } },
+    "DPAD_OK": { "label": "OK", "ir_hex": "0x20DF22DD", "wifi_payload": { "key": "ENTER" } },
+    "HOME": { "label": "Home", "ir_hex": "0x20DF3EC1", "wifi_payload": { "key": "HOME" } },
+    "BACK": { "label": "Back", "ir_hex": "0x20DF14EB", "wifi_payload": { "key": "BACK" } },
+    "NETFLIX": { "label": "Netflix", "wifi_payload": { "uri": "ssap://system.launcher/launch", "payload": { "id": "netflix" } } },
+    "YOUTUBE": { "label": "YouTube", "wifi_payload": { "uri": "ssap://system.launcher/launch", "payload": { "id": "youtube.leanback.v4" } } },
+    "NUM_0": { "label": "0", "ir_hex": "0x20DF08F7", "wifi_payload": { "key": "0" } },
+    "NUM_1": { "label": "1", "ir_hex": "0x20DF8877", "wifi_payload": { "key": "1" } }
+  }
+}
