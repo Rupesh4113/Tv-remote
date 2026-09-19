@@ -1,18 +1,24 @@
-name: Android Build
+name: Build & Release Android APK
 
 on:
   push:
     branches: [ main ]
+    tags:
+      - 'v*'
+  release:
+    types: [published, created]
   workflow_dispatch:
 
 jobs:
   build-apk:
-    name: Build Android APK
+    name: Build & Publish Release APK
     runs-on: ubuntu-latest
     permissions:
       contents: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up Java JDK
         uses: actions/setup-java@v4
@@ -28,6 +34,7 @@ jobs:
         with:
           flutter-version: '3.22.x'
           channel: 'stable'
+          cache: true
 
       - name: Build Release APK
         run: |
@@ -35,21 +42,33 @@ jobs:
           flutter pub get
           flutter build apk --release
 
-      - name: Upload APK Artifact
+      - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
           name: remoteone-release-apk
           path: mobile/build/app/outputs/flutter-apk/app-release.apk
 
-      - name: Publish to GitHub Releases
+      - name: Attach APK to GitHub Release
         uses: softprops/action-gh-release@v2
-        if: github.ref == 'refs/heads/main'
         with:
-          tag_name: v1.0.0
-          name: "RemoteOne v1.0.0 Release"
-          body: "Official Android APK release for RemoteOne Universal TV & Set-Top Box Remote."
+          tag_name: ${{ github.event.release.tag_name || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'v1.0.0' }}
+          name: ${{ github.event.release.name || (startsWith(github.ref, 'refs/tags/') && github.ref_name) || 'RemoteOne v1.0.0 Release' }}
+          body: |
+            ## RemoteOne — Universal TV & Set-Top Box Remote
+            
+            ### Release APK
+            - File: `app-release.apk`
+            - Built with Flutter 3.22 & Android SDK 34
+            - Includes offline device profiles for Samsung, Sony, LG, Tata Play, Airtel, Dish TV, etc.
+            - Features IR Blaster control, Wi-Fi LAN discovery, Hardware Diagnostics, and Live Test Mode.
+            
+            ### Download & Install
+            1. Download `app-release.apk` below directly to your phone.
+            2. Open the file to install (allow installs from unknown sources if prompted).
+            3. Open RemoteOne and run the First-Run Hardware Check.
           draft: false
           prerelease: false
+          make_latest: true
           files: mobile/build/app/outputs/flutter-apk/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
