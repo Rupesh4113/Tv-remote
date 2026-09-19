@@ -1,0 +1,108 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeviceProfile",
+  "description": "Normalized device profile for Universal TV and Set-Top Box Remote Control",
+  "type": "object",
+  "required": ["id", "brand", "category", "model", "supported_transports", "commands"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique profile identifier (e.g. tv-samsung-smart)"
+    },
+    "brand": {
+      "type": "string",
+      "description": "Brand name (e.g. Samsung, Tata Play, Sony)"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["TV", "SET_TOP_BOX", "STREAMING_DEVICE", "AUDIO", "PROJECTOR"]
+    },
+    "model": {
+      "type": "string",
+      "description": "Model series or Generic"
+    },
+    "region": {
+      "type": "string",
+      "description": "Primary region (e.g. India, Global, APAC)"
+    },
+    "version": {
+      "type": "string",
+      "description": "Profile version"
+    },
+    "supported_transports": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["IR", "WIFI", "BLUETOOTH"]
+      },
+      "minItems": 1
+    },
+    "ir_config": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "type": "string",
+          "enum": ["NEC", "RC5", "RC6", "SONY_SIRC", "SAMSUNG", "PANASONIC", "DISH_TATA", "RAW"]
+        },
+        "carrier_frequency_hz": {
+          "type": "integer",
+          "default": 38000
+        },
+        "customer_code": {
+          "type": "string"
+        }
+      }
+    },
+    "wifi_config": {
+      "type": "object",
+      "properties": {
+        "adapter": {
+          "type": "string",
+          "enum": ["samsung_tizen", "lg_webos", "sony_ircc", "android_tv", "roku_ecp", "generic_http"]
+        },
+        "default_port": {
+          "type": "integer"
+        },
+        "auth_required": {
+          "type": "boolean",
+          "default": false
+        },
+        "auth_type": {
+          "type": "string",
+          "enum": ["PIN", "TOKEN", "PSK", "NONE"]
+        },
+        "discovery_service": {
+          "type": "string"
+        }
+      }
+    },
+    "bluetooth_config": {
+      "type": "object",
+      "properties": {
+        "service_uuid": {
+          "type": "string"
+        },
+        "write_characteristic_uuid": {
+          "type": "string"
+        }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "description": "Map of normalized command names to command details",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "label": { "type": "string" },
+          "ir_hex": { "type": "string" },
+          "ir_pattern": {
+            "type": "array",
+            "items": { "type": "integer" }
+          },
+          "wifi_payload": { "type": "object" },
+          "ble_bytes": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "stb-dish-tv",
+  "brand": "Dish TV",
+  "category": "SET_TOP_BOX",
+  "model": "DishNXT HD / Dish SMRT Hub",
+  "region": "India",
+  "version": "1.0.0",
+  "supported_transports": ["IR"],
+  "ir_config": {
+    "protocol": "NEC",
+    "carrier_frequency_hz": 38000,
+    "customer_code": "0x00FF"
+  },
+  "commands": {
+    "POWER": { "label": "Power", "ir_hex": "0x00FF4AB5" },
+    "VOLUME_UP": { "label": "Volume +", "ir_hex": "0x00FF12ED" },
+    "VOLUME_DOWN": { "label": "Volume -", "ir_hex": "0x00FF1AE5" },
+    "MUTE": { "label": "Mute", "ir_hex": "0x00FF0AF5" },
+    "CHANNEL_UP": { "label": "Channel +", "ir_hex": "0x00FF02FD" },
+    "CHANNEL_DOWN": { "label": "Channel -", "ir_hex": "0x00FF0EF1" },
+    "GUIDE": { "label": "Guide", "ir_hex": "0x00FF38C7" },
+    "MENU": { "label": "Menu", "ir_hex": "0x00FF7887" },
+    "BACK": { "label": "Back", "ir_hex": "0x00FF5AA5" },
+    "EXIT": { "label": "Exit", "ir_hex": "0x00FF6897" },
+    "DPAD_UP": { "label": "Up", "ir_hex": "0x00FF18E7" },
+    "DPAD_DOWN": { "label": "Down", "ir_hex": "0x00FF52AD" },
+    "DPAD_LEFT": { "label": "Left", "ir_hex": "0x00FF906F" },
+    "DPAD_RIGHT": { "label": "Right", "ir_hex": "0x00FF9867" },
+    "DPAD_OK": { "label": "OK", "ir_hex": "0x00FF30CF" },
+    "COLOR_RED": { "label": "Red", "ir_hex": "0x00FF728D" },
+    "COLOR_GREEN": { "label": "Green", "ir_hex": "0x00FFB04F" },
+    "COLOR_YELLOW": { "label": "Yellow", "ir_hex": "0x00FFF00F" },
+    "COLOR_BLUE": { "label": "Blue", "ir_hex": "0x00FF32CD" },
+    "NUM_0": { "label": "0", "ir_hex": "0x00FF00FF" },
+    "NUM_1": { "label": "1", "ir_hex": "0x00FF807F" },
+    "NUM_2": { "label": "2", "ir_hex": "0x00FF40BF" },
+    "NUM_3": { "label": "3", "ir_hex": "0x00FFC03F" }
+  }
+}

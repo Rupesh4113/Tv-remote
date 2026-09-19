@@ -1,0 +1,67 @@
+name: CI Test Suite
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  python-tests:
+    name: Python Protocols & Backend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r backend/requirements.txt
+
+      - name: Run Schema and Protocol Tests
+        run: |
+          pytest tests/ -v
+
+      - name: Run Backend & Simulator Tests
+        run: |
+          pytest backend/tests/ -v
+
+  flutter-tests:
+    name: Flutter Lint & Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.x'
+          channel: 'stable'
+          cache: true
+
+      - name: Install Flutter Dependencies
+        run: |
+          cd mobile
+          flutter pub get
+
+      - name: Run Flutter Analyze
+        run: |
+          cd mobile
+          flutter analyze
+
+      - name: Run Flutter Tests
+        run: |
+          cd mobile
+          flutter test

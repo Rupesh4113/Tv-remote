@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app
+    restart: unless-stopped
+
+  simulator:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m backend.simulator.runner
+    ports:
+      - "8080:8080" # Dashboard
+      - "8081:8081" # Mock Samsung Tizen WS
+      - "8082:8082" # Mock LG webOS SSAP WS
+      - "8083:8083" # Mock Sony Bravia IRCC HTTP
+      - "8084:8084" # Mock Tata Play STB HTTP
+    environment:
+      - PYTHONPATH=/app
+    restart: unless-stopped

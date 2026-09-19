@@ -1,0 +1,37 @@
+{
+  "id": "tv-oneplus-smart",
+  "brand": "OnePlus",
+  "category": "TV",
+  "model": "OnePlus TV (OxygenPlay / BLE / Android TV)",
+  "region": "India",
+  "version": "1.0.0",
+  "supported_transports": ["WIFI", "BLUETOOTH"],
+  "wifi_config": {
+    "adapter": "android_tv",
+    "default_port": 6466,
+    "auth_required": true,
+    "auth_type": "PIN",
+    "discovery_service": "_androidtvremote2._tcp.local"
+  },
+  "bluetooth_config": {
+    "service_uuid": "00001812-0000-1000-8000-00805f9b34fb",
+    "write_characteristic_uuid": "00002a4d-0000-1000-8000-00805f9b34fb"
+  },
+  "commands": {
+    "POWER": { "label": "Power", "wifi_payload": { "key_code": 26 } },
+    "VOLUME_UP": { "label": "Volume +", "wifi_payload": { "key_code": 24 } },
+    "VOLUME_DOWN": { "label": "Volume -", "wifi_payload": { "key_code": 25 } },
+    "MUTE": { "label": "Mute", "wifi_payload": { "key_code": 164 } },
+    "DPAD_UP": { "label": "Up", "wifi_payload": { "key_code": 19 } },
+    "DPAD_DOWN": { "label": "Down", "wifi_payload": { "key_code": 20 } },
+    "DPAD_LEFT": { "label": "Left", "wifi_payload": { "key_code": 21 } },
+    "DPAD_RIGHT": { "label": "Right", "wifi_payload": { "key_code": 22 } },
+    "DPAD_OK": { "label": "OK", "wifi_payload": { "key_code": 23 } },
+    "BACK": { "label": "Back", "wifi_payload": { "key_code": 4 } },
+    "HOME": { "label": "Home", "wifi_payload": { "key_code": 3 } },
+    "OXYGEN_PLAY": { "label": "OxygenPlay", "wifi_payload": { "key_code": 172 } },
+    "NETFLIX": { "label": "Netflix", "wifi_payload": { "app_package": "com.netflix.ninja" } },
+    "PRIME_VIDEO": { "label": "Prime Video", "wifi_payload": { "app_package": "com.amazon.amazonvideo.livingroom" } },
+    "YOUTUBE": { "label": "YouTube", "wifi_payload": { "app_package": "com.google.android.youtube.tv" } }
+  }
+}
