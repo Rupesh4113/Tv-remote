@@ -36,19 +36,30 @@ jobs:
       - name: Setup Gradle Wrapper and Build Release APK
         run: |
           cd mobile
-          FLUTTER_DIR=$(dirname $(dirname $(which flutter)))
-          echo "Flutter directory: $FLUTTER_DIR"
-
           mkdir -p android/gradle/wrapper
-          if [ -f "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew" ]; then
-            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew" android/
-            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew.bat" android/
-            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradle/wrapper/gradle-wrapper.jar.tmpl" android/gradle/wrapper/gradle-wrapper.jar
-            chmod +x android/gradlew
+
+          # Download official gradle-wrapper.jar if not present
+          if [ ! -f android/gradle/wrapper/gradle-wrapper.jar ]; then
+            echo "Fetching gradle-wrapper.jar..."
+            curl -sSL -o android/gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.3.0/gradle/wrapper/gradle-wrapper.jar || true
           fi
 
+          # Ensure gradlew exists
+          FLUTTER_DIR=$(dirname $(dirname $(which flutter)))
+          if [ ! -f android/gradlew ] && [ -f "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew" ]; then
+            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew" android/
+            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew.bat" android/
+          fi
+          chmod +x android/gradlew || true
+
           flutter pub get
-          flutter build apk --release
+          flutter build apk --release -v 2>&1 | tee build.log || {
+            echo "### Build Failed Details" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -n 120 build.log >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            exit 1
+          }
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
