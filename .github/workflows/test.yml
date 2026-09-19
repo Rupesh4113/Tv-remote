@@ -25,10 +25,14 @@ jobs:
           pip install -r backend/requirements.txt
 
       - name: Run Schema and Protocol Tests
+        env:
+          PYTHONPATH: .
         run: |
           pytest tests/ -v
 
       - name: Run Backend & Simulator Tests
+        env:
+          PYTHONPATH: .
         run: |
           pytest backend/tests/ -v
 
