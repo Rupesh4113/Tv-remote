@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants.dart';
 import '../../core/haptics.dart';
+import '../../core/diagnostic_logger.dart';
 import '../../data/database/storage_service.dart';
 import '../../transports/ir/ir_transport.dart';
 import 'privacy_screen.dart';
+import 'live_test_mode_screen.dart';
+import 'ir_hardware_test_screen.dart';
+import 'connection_diagnostics_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -78,7 +83,72 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          // Privacy & Security
+          // Developer & Diagnostics
+          const Text('Developer & Physical Diagnostics', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFF00E5FF))),
+          const SizedBox(height: 8),
+          Card(
+            child: Column(
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.science_outlined, color: Color(0xFF00E5FF)),
+                  title: const Text('Live Device Testing Mode'),
+                  subtitle: const Text('Real-time command validation with JSON/CSV report export', style: TextStyle(fontSize: 12)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LiveTestModeScreen()),
+                    );
+                  },
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.settings_remote_outlined, color: Colors.amber),
+                  title: const Text('IR Hardware Diagnostics'),
+                  subtitle: const Text('Hardware carrier frequency check and test pulses', style: TextStyle(fontSize: 12)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const IrHardwareTestScreen()),
+                    );
+                  },
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.wifi_tethering, color: Color(0xFF00E676)),
+                  title: const Text('Wi-Fi Connection Diagnostics'),
+                  subtitle: const Text('Port reachability (Samsung 8001/8002, LG 3000/3001, Android TV 6466/6467, Roku 8060)', style: TextStyle(fontSize: 12)),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 14),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ConnectionDiagnosticsScreen()),
+                    );
+                  },
+                ),
+                const Divider(height: 1),
+                ListTile(
+                  leading: const Icon(Icons.file_download_outlined, color: Colors.white70),
+                  title: const Text('Export Local Diagnostic Logs'),
+                  subtitle: const Text('Copy sanitized local event logs for bug reporting', style: TextStyle(fontSize: 12)),
+                  trailing: const Icon(Icons.copy, size: 16),
+                  onTap: () {
+                    final logs = DiagnosticLogger.instance.exportAsText();
+                    Clipboard.setData(ClipboardData(text: logs));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Diagnostic logs copied to clipboard (passwords and tokens omitted)'),
+                        backgroundColor: Color(0xFF1E2430),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Security & Data
           const Text('Security & Data', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFF00E5FF))),
           const SizedBox(height: 8),
           Card(

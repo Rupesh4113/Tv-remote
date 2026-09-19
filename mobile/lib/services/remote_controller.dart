@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import '../core/diagnostic_logger.dart';
 import '../core/haptics.dart';
 import '../data/models/command_model.dart';
 import '../data/models/device_model.dart';
@@ -95,6 +96,15 @@ class RemoteController extends ChangeNotifier {
       success = false;
     } finally {
       _isTransmitting = false;
+      DiagnosticLogger.instance.log(
+        device: device.name,
+        transport: device.activeTransport.name.toUpperCase(),
+        protocol: device.activeTransport == TransportType.ir ? 'NEC/RAW' : 'IP/GATT',
+        frequency: device.activeTransport == TransportType.ir ? 38000 : 0,
+        command: command.key,
+        status: success ? 'SUCCESS' : 'FAILED',
+        detail: _lastError,
+      );
       notifyListeners();
     }
 

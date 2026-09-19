@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants.dart';
 import 'add_device_wizard.dart';
 import 'home_screen.dart';
+import 'first_run_hardware_check.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -134,7 +135,25 @@ class WelcomeScreen extends StatelessWidget {
                   );
                 },
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: 10),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.hardware_rounded, size: 18),
+                label: const Text('Check Phone Hardware & IR Blaster'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  side: const BorderSide(color: Colors.white24),
+                  foregroundColor: Colors.white70,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const FirstRunHardwareCheckScreen(),
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 10),
               TextButton(
                 child: const Text('Open My Remotes', style: TextStyle(color: Colors.white70)),
                 onPressed: () {

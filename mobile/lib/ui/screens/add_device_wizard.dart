@@ -28,6 +28,9 @@ class _AddDeviceWizardState extends State<AddDeviceWizard> {
   bool _isCheckingHardware = true;
   bool _isScanning = false;
   List<DiscoveredDevice> _discoveredDevices = [];
+  int _currentCandidateIndex = 1;
+  int _totalCandidates = 5;
+  bool _deviceConfirmed = false;
 
   @override
   void initState() {
@@ -342,42 +345,135 @@ class _AddDeviceWizardState extends State<AddDeviceWizard> {
             ),
             const SizedBox(height: 16),
           ],
-          const Text(
-            'Test Remote Buttons:',
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-          const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton.icon(
-                icon: const Icon(Icons.power_settings_new),
-                label: const Text('Power'),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
-                onPressed: () {
-                  final controller = Provider.of<RemoteController>(context, listen: false);
-                  controller.sendKey('POWER');
-                },
+          if (_selectedTransport == TransportType.ir) ...[
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1E2430),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: Colors.white12),
               ),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.volume_up),
-                label: const Text('Vol +'),
-                onPressed: () {
-                  final controller = Provider.of<RemoteController>(context, listen: false);
-                  controller.sendKey('VOLUME_UP');
-                },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'IR Code Set $_currentCandidateIndex of $_totalCandidates',
+                        style: const TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF00E5FF)),
+                      ),
+                      Text(
+                        _deviceConfirmed ? '✓ Confirmed' : 'Testing...',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: _deviceConfirmed ? const Color(0xFF00E676) : Colors.amber,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    'Point the top of your phone toward the TV/STB and press TEST POWER:',
+                    style: TextStyle(fontSize: 13, color: Colors.white70),
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      icon: const Icon(Icons.power_settings_new),
+                      label: const Text('TEST POWER BUTTON'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      onPressed: () {
+                        final controller = Provider.of<RemoteController>(context, listen: false);
+                        controller.sendKey('POWER');
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+                  const Text('Did the device respond (turn ON/OFF)?', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          icon: const Icon(Icons.navigate_next),
+                          label: const Text('NO (Try Next)'),
+                          onPressed: () {
+                            setState(() {
+                              if (_currentCandidateIndex < _totalCandidates) {
+                                _currentCandidateIndex++;
+                              } else {
+                                _currentCandidateIndex = 1;
+                              }
+                              _deviceConfirmed = false;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.check, color: Colors.black),
+                          label: const Text('YES (Works)'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF00E676),
+                            foregroundColor: Colors.black,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _deviceConfirmed = true;
+                            });
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.arrow_upward),
-                label: const Text('Ch +'),
-                onPressed: () {
-                  final controller = Provider.of<RemoteController>(context, listen: false);
-                  controller.sendKey('CHANNEL_UP');
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 30),
+            ),
+            const SizedBox(height: 16),
+          ] else ...[
+            const Text(
+              'Test Remote Buttons:',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.power_settings_new),
+                  label: const Text('Power'),
+                  style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                  onPressed: () {
+                    final controller = Provider.of<RemoteController>(context, listen: false);
+                    controller.sendKey('POWER');
+                  },
+                ),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.volume_up),
+                  label: const Text('Vol +'),
+                  onPressed: () {
+                    final controller = Provider.of<RemoteController>(context, listen: false);
+                    controller.sendKey('VOLUME_UP');
+                  },
+                ),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.arrow_upward),
+                  label: const Text('Ch +'),
+                  onPressed: () {
+                    final controller = Provider.of<RemoteController>(context, listen: false);
+                    controller.sendKey('CHANNEL_UP');
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+          ],
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
