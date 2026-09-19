@@ -36,6 +36,18 @@ jobs:
       - name: Build Release APK
         run: |
           cd mobile
+          mkdir -p /tmp/android_backup
+          cp -r android/app/src/main/kotlin /tmp/android_backup/
+          cp android/app/src/main/AndroidManifest.xml /tmp/android_backup/
+
+          flutter create . --platforms android --org org.remoteone
+
+          cp -r /tmp/android_backup/kotlin/* android/app/src/main/kotlin/
+          cp /tmp/android_backup/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
+
+          sed -i 's/signingConfig = signingConfigs.debug/signingConfig = signingConfigs.debug/g' android/app/build.gradle
+          sed -i 's/signingConfig signingConfigs.release/signingConfig signingConfigs.debug/g' android/app/build.gradle || true
+
           flutter pub get
           flutter build apk --release
 

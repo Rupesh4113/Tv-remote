@@ -1,0 +1,8 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  errors:
+    todo: ignore
+    unused_import: warning
+    unused_local_variable: warning
+    deprecated_member_use: ignore
