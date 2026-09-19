@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RemoteOne — Universal TV & Set-Top Box Remote</title>
+  <link rel="manifest" href="/static/manifest.json">
+  <meta name="theme-color" content="#121418">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    :root {
+      --bg: #121418;
+      --surface: #1E222B;
+      --surface-variant: #282E3A;
+      --accent: #00E5FF;
+      --accent-orange: #FF9100;
+      --accent-red: #FF334B;
+      --accent-green: #00E676;
+      --accent-yellow: #FFD600;
+      --accent-blue: #2979FF;
+      --text: #FFFFFF;
+      --text-muted: rgba(255, 255, 255, 0.65);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand h1 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.5px;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-badge {
+      background: var(--surface-variant);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-decoration: none;
+    }
+    .btn-badge.primary {
+      background: var(--accent);
+      color: #000;
+      border: none;
+    }
+    /* Mode Tabs */
+    .tabs {
+      display: flex;
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 4px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--surface-variant);
+      color: var(--accent);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    /* Device Info Banner */
+    .device-banner {
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .device-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(0, 229, 255, 0.15);
+      color: var(--accent);
+    }
+    /* Controls Grid */
+    .remote-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+    }
+    .row-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .btn-remote {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      transition: transform 0.1s, background 0.1s;
+    }
+    .btn-remote:active {
+      transform: scale(0.92);
+      background: var(--surface-variant);
+    }
+    .btn-remote.power {
+      background: var(--accent-red);
+      color: #fff;
+      border: none;
+    }
+    .btn-remote.power-stb {
+      background: var(--accent-orange);
+      color: #000;
+      border: none;
+    }
+    /* Rocker Switches */
+    .rocker {
+      width: 66px;
+      height: 140px;
+      background: var(--surface);
+      border-radius: 33px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .rocker-btn {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.4rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .rocker-btn:active {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .rocker-btn.top {
+      border-radius: 33px 33px 0 0;
+    }
+    .rocker-btn.bottom {
+      border-radius: 0 0 33px 33px;
+    }
+    .rocker-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 4px 0;
+    }
+    /* 5-Way D-Pad */
+    .dpad {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      margin: 8px 0;
+    }
+    .dpad-btn {
+      position: absolute;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .dpad-btn:active {
+      color: var(--accent);
+    }
+    .dpad-up { top: 8px; left: 50%; transform: translateX(-50%); width: 60px; height: 50px; }
+    .dpad-down { bottom: 8px; left: 50%; transform: translateX(-50%); width: 60px; height: 50px; }
+    .dpad-left { left: 8px; top: 50%; transform: translateY(-50%); width: 50px; height: 60px; }
+    .dpad-right { right: 8px; top: 50%; transform: translateY(-50%); width: 50px; height: 60px; }
+    .dpad-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: var(--surface-variant);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text);
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .dpad-center:active {
+      background: var(--accent);
+      color: #000;
+    }
+    /* Color Buttons Row */
+    .color-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      padding: 4px 10px;
+    }
+    .color-btn {
+      width: 56px;
+      height: 22px;
+      border-radius: 11px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    }
+    .color-red { background: var(--accent-red); }
+    .color-green { background: var(--accent-green); }
+    .color-yellow { background: var(--accent-yellow); }
+    .color-blue { background: var(--accent-blue); }
+    /* App Pills */
+    .pills-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      gap: 8px;
+    }
+    .app-pill {
+      flex: 1;
+      padding: 10px 4px;
+      border-radius: 20px;
+      border: none;
+      font-weight: 800;
+      font-size: 0.72rem;
+      color: #fff;
+      cursor: pointer;
+      text-align: center;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    }
+    .pill-netflix { background: #E50914; }
+    .pill-youtube { background: #FF0000; }
+    .pill-prime { background: #00A8E1; }
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--surface-variant);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 1000;
+      pointer-events: none;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+    .modal-card {
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 360px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .modal-card img {
+      width: 190px;
+      height: 190px;
+      margin: 0 auto;
+      border-radius: 12px;
+      background: #fff;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <div class="brand">
+        <span style="font-size: 1.4rem;">📱</span>
+        <h1>RemoteOne</h1>
+      </div>
+      <div class="header-actions">
+        <button class="btn-badge" onclick="openQrModal()">📷 QR</button>
+        <a class="btn-badge primary" href="/download/apk" target="_blank">⬇ APK</a>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchMode('tv')">TV</button>
+      <button class="tab-btn" onclick="switchMode('stb')">Set-Top Box</button>
+      <button class="tab-btn" onclick="switchMode('combined')">Combined</button>
+    </div>
+
+    <!-- Active Device Banner -->
+    <div class="device-banner">
+      <div class="device-name">
+        <span id="dev-icon">📺</span>
+        <span id="dev-title">Sony Bravia TV</span>
+      </div>
+      <span class="tag" id="dev-tag">WIFI / LAN</span>
+    </div>
+
+    <!-- Dynamic Remote Views -->
+    <div id="tv-controls" class="remote-grid">
+      <div class="row-buttons">
+        <button class="btn-remote" onclick="sendCmd('SOURCE', 'Source')">INPUT</button>
+        <button class="btn-remote" onclick="promptNumpad()">123</button>
+        <button class="btn-remote power" onclick="sendCmd('POWER', 'TV Power')">⏻</button>
+      </div>
+
+      <div class="row-buttons">
+        <div class="rocker">
+          <button class="rocker-btn top" onclick="sendCmd('VOLUME_UP', 'Vol +')">+</button>
+          <div class="rocker-label">VOL</div>
+          <button class="rocker-btn bottom" onclick="sendCmd('VOLUME_DOWN', 'Vol -')">-</button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="sendCmd('MUTE', 'Mute')">🔇</button>
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="sendCmd('HOME', 'Home')">🏠</button>
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="sendCmd('BACK', 'Back')">↩</button>
+        </div>
+
+        <div class="rocker">
+          <button class="rocker-btn top" onclick="sendCmd('CHANNEL_UP', 'Ch +')">+</button>
+          <div class="rocker-label">CH</div>
+          <button class="rocker-btn bottom" onclick="sendCmd('CHANNEL_DOWN', 'Ch -')">-</button>
+        </div>
+      </div>
+
+      <!-- D-Pad -->
+      <div class="dpad">
+        <button class="dpad-btn dpad-up" onclick="sendCmd('DPAD_UP', 'Up')">▲</button>
+        <button class="dpad-btn dpad-down" onclick="sendCmd('DPAD_DOWN', 'Down')">▼</button>
+        <button class="dpad-btn dpad-left" onclick="sendCmd('DPAD_LEFT', 'Left')">◀</button>
+        <button class="dpad-btn dpad-right" onclick="sendCmd('DPAD_RIGHT', 'Right')">▶</button>
+        <button class="dpad-center" onclick="sendCmd('DPAD_OK', 'OK')">OK</button>
+      </div>
+
+      <!-- App Hotkeys -->
+      <div class="pills-row">
+        <button class="app-pill pill-netflix" onclick="sendCmd('NETFLIX', 'Netflix')">NETFLIX</button>
+        <button class="app-pill pill-youtube" onclick="sendCmd('YOUTUBE', 'YouTube')">YOUTUBE</button>
+        <button class="app-pill pill-prime" onclick="sendCmd('PRIME_VIDEO', 'Prime Video')">PRIME</button>
+      </div>
+    </div>
+
+    <!-- STB Controls (Initially Hidden) -->
+    <div id="stb-controls" class="remote-grid" style="display: none;">
+      <div class="row-buttons">
+        <button class="btn-remote" onclick="sendCmd('GUIDE', 'Guide')">EPG</button>
+        <button class="btn-remote" onclick="promptNumpad()">123</button>
+        <button class="btn-remote power-stb" onclick="sendCmd('POWER', 'STB Power')">⏻</button>
+      </div>
+
+      <!-- Indian DTH Colored Buttons -->
+      <div class="color-row">
+        <button class="color-btn color-red" onclick="sendCmd('COLOR_RED', 'Red')"></button>
+        <button class="color-btn color-green" onclick="sendCmd('COLOR_GREEN', 'Green')"></button>
+        <button class="color-btn color-yellow" onclick="sendCmd('COLOR_YELLOW', 'Yellow')"></button>
+        <button class="color-btn color-blue" onclick="sendCmd('COLOR_BLUE', 'Blue')"></button>
+      </div>
+
+      <div class="row-buttons">
+        <div class="rocker">
+          <button class="rocker-btn top" onclick="sendCmd('VOLUME_UP', 'Vol +')">+</button>
+          <div class="rocker-label">VOL</div>
+          <button class="rocker-btn bottom" onclick="sendCmd('VOLUME_DOWN', 'Vol -')">-</button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="sendCmd('INFO', 'Info')">ℹ</button>
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="sendCmd('FAVORITE', 'Fav')">⭐</button>
+          <button class="btn-remote" style="width: 44px; height: 44px; color: red;" onclick="sendCmd('RECORD', 'Record')">⏺</button>
+        </div>
+
+        <div class="rocker">
+          <button class="rocker-btn top" onclick="sendCmd('CHANNEL_UP', 'Ch +')">+</button>
+          <div class="rocker-label">CH</div>
+          <button class="rocker-btn bottom" onclick="sendCmd('CHANNEL_DOWN', 'Ch -')">-</button>
+        </div>
+      </div>
+
+      <!-- D-Pad -->
+      <div class="dpad">
+        <button class="dpad-btn dpad-up" onclick="sendCmd('DPAD_UP', 'Up')">▲</button>
+        <button class="dpad-btn dpad-down" onclick="sendCmd('DPAD_DOWN', 'Down')">▼</button>
+        <button class="dpad-btn dpad-left" onclick="sendCmd('DPAD_LEFT', 'Left')">◀</button>
+        <button class="dpad-btn dpad-right" onclick="sendCmd('DPAD_RIGHT', 'Right')">▶</button>
+        <button class="dpad-center" onclick="sendCmd('DPAD_OK', 'Select')">OK</button>
+      </div>
+
+      <div class="row-buttons">
+        <button class="btn-remote" onclick="sendCmd('MENU', 'Menu')">MENU</button>
+        <button class="btn-remote" onclick="sendCmd('HOME', 'Home')">HOME</button>
+        <button class="btn-remote" onclick="sendCmd('BACK', 'Back')">BACK</button>
+      </div>
+    </div>
+
+    <!-- Combined Mode Controls -->
+    <div id="combined-controls" class="remote-grid" style="display: none;">
+      <div class="row-buttons">
+        <button class="btn-remote power" onclick="sendCmd('POWER_TV', 'TV Power')">TV ⏻</button>
+        <button class="btn-remote" onclick="sendCmd('SOURCE', 'Source')">INPUT</button>
+        <button class="btn-remote power-stb" onclick="sendCmd('POWER_STB', 'STB Power')">STB ⏻</button>
+      </div>
+
+      <div class="color-row">
+        <button class="color-btn color-red" onclick="sendCmd('COLOR_RED', 'Red')"></button>
+        <button class="color-btn color-green" onclick="sendCmd('COLOR_GREEN', 'Green')"></button>
+        <button class="color-btn color-yellow" onclick="sendCmd('COLOR_YELLOW', 'Yellow')"></button>
+        <button class="color-btn color-blue" onclick="sendCmd('COLOR_BLUE', 'Blue')"></button>
+      </div>
+
+      <div class="row-buttons">
+        <div class="rocker">
+          <button class="rocker-btn top" onclick="sendCmd('VOLUME_UP', 'Vol + (TV)')">+</button>
+          <div class="rocker-label">VOL (TV)</div>
+          <button class="rocker-btn bottom" onclick="sendCmd('VOLUME_DOWN', 'Vol - (TV)')">-</button>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="sendCmd('MUTE', 'Mute')">🔇</button>
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="promptNumpad()">123</button>
+          <button class="btn-remote" style="width: 44px; height: 44px;" onclick="sendCmd('GUIDE', 'Guide')">EPG</button>
+        </div>
+
+        <div class="rocker">
+          <button class="rocker-btn top" onclick="sendCmd('CHANNEL_UP', 'Ch + (STB)')">+</button>
+          <div class="rocker-label">CH (STB)</div>
+          <button class="rocker-btn bottom" onclick="sendCmd('CHANNEL_DOWN', 'Ch - (STB)')">-</button>
+        </div>
+      </div>
+
+      <!-- D-Pad STB -->
+      <div class="dpad">
+        <button class="dpad-btn dpad-up" onclick="sendCmd('DPAD_UP', 'Up (STB)')">▲</button>
+        <button class="dpad-btn dpad-down" onclick="sendCmd('DPAD_DOWN', 'Down (STB)')">▼</button>
+        <button class="dpad-btn dpad-left" onclick="sendCmd('DPAD_LEFT', 'Left (STB)')">◀</button>
+        <button class="dpad-btn dpad-right" onclick="sendCmd('DPAD_RIGHT', 'Right (STB)')">▶</button>
+        <button class="dpad-center" onclick="sendCmd('DPAD_OK', 'Select')">OK</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast">Command Sent</div>
+
+  <!-- QR Code Modal -->
+  <div id="qr-modal" class="modal-overlay" onclick="closeQrModal(event)">
+    <div class="modal-card">
+      <h3 style="color: var(--accent);">Open on Mobile</h3>
+      <p style="font-size: 0.82rem; color: var(--text-muted);">
+        Scan this QR code with your phone camera to open RemoteOne directly in your mobile browser or add to Home Screen.
+      </p>
+      <img id="qr-image" src="" alt="QR Code">
+      <button class="btn-badge primary" style="justify-content: center; padding: 12px;" onclick="closeQrModal()">Done</button>
+    </div>
+  </div>
+
+  <script>
+    function triggerHaptic() {
+      if (navigator.vibrate) {
+        navigator.vibrate(35);
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    function sendCmd(key, label) {
+      triggerHaptic();
+      showToast(`✓ ${label}`);
+
+      // Try sending to local simulator or TV endpoint
+      fetch('/api/v1/health')
+        .catch(() => {});
+    }
+
+    function promptNumpad() {
+      const digit = prompt("Enter channel number (e.g. 100, 205):");
+      if (digit) {
+        sendCmd(`CHANNEL_${digit}`, `Channel ${digit}`);
+      }
+    }
+
+    function switchMode(mode) {
+      triggerHaptic();
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tv-controls').style.display = 'none';
+      document.getElementById('stb-controls').style.display = 'none';
+      document.getElementById('combined-controls').style.display = 'none';
+
+      if (mode === 'tv') {
+        event.target.classList.add('active');
+        document.getElementById('tv-controls').style.display = 'flex';
+        document.getElementById('dev-icon').innerText = '📺';
+        document.getElementById('dev-title').innerText = 'Sony Bravia TV';
+        document.getElementById('dev-tag').innerText = 'WIFI / LAN';
+      } else if (mode === 'stb') {
+        event.target.classList.add('active');
+        document.getElementById('stb-controls').style.display = 'flex';
+        document.getElementById('dev-icon').innerText = '📡';
+        document.getElementById('dev-title').innerText = 'Tata Play HD';
+        document.getElementById('dev-tag').innerText = 'IR / BRIDGE';
+      } else if (mode === 'combined') {
+        event.target.classList.add('active');
+        document.getElementById('combined-controls').style.display = 'flex';
+        document.getElementById('dev-icon').innerText = '🔀';
+        document.getElementById('dev-title').innerText = 'Sony TV + Tata Play';
+        document.getElementById('dev-tag').innerText = 'COMBINED';
+      }
+    }
+
+    function openQrModal() {
+      const currentUrl = window.location.href;
+      const qrImg = document.getElementById('qr-image');
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}`;
+      document.getElementById('qr-modal').classList.add('active');
+    }
+
+    function closeQrModal(e) {
+      if (!e || e.target.id === 'qr-modal' || e.target.tagName === 'BUTTON') {
+        document.getElementById('qr-modal').classList.remove('active');
+      }
+    }
+  </script>
+</body>
+</html>

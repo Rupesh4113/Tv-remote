@@ -9,6 +9,8 @@ jobs:
   build-apk:
     name: Build Android APK
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -27,7 +29,7 @@ jobs:
           flutter-version: '3.22.x'
           channel: 'stable'
 
-      - name: Build APK
+      - name: Build Release APK
         run: |
           cd mobile
           flutter pub get
@@ -38,3 +40,16 @@ jobs:
         with:
           name: remoteone-release-apk
           path: mobile/build/app/outputs/flutter-apk/app-release.apk
+
+      - name: Publish to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main'
+        with:
+          tag_name: v1.0.0
+          name: "RemoteOne v1.0.0 Release"
+          body: "Official Android APK release for RemoteOne Universal TV & Set-Top Box Remote."
+          draft: false
+          prerelease: false
+          files: mobile/build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

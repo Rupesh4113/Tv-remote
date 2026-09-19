@@ -67,3 +67,17 @@ def test_backup_save_and_retrieve():
     data = get_resp.json()
     assert data["user_id"] == "test_user_123"
     assert len(data["devices"]) == 2
+
+
+def test_web_remote_root():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "RemoteOne" in response.text
+    assert "manifest.json" in response.text
+
+
+def test_download_apk_redirect():
+    response = client.get("/download/apk", follow_redirects=False)
+    # If local APK not built, redirects to GitHub release URL
+    assert response.status_code in [200, 307]
+

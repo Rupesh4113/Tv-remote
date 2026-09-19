@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: remoteone-cloud
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    region: oregon
+    branch: main
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: PORT
+        value: 8000

@@ -1,0 +1,22 @@
+{
+  "name": "RemoteOne - Universal Remote",
+  "short_name": "RemoteOne",
+  "description": "Universal TV & Set-Top Box Remote Control",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121418",
+  "theme_color": "#00E5FF",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://img.icons8.com/fluency/192/remote-control.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://img.icons8.com/fluency/512/remote-control.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
