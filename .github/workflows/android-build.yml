@@ -33,20 +33,19 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Build Release APK
+      - name: Setup Gradle Wrapper and Build Release APK
         run: |
           cd mobile
-          mkdir -p /tmp/android_backup
-          cp -r android/app/src/main/kotlin /tmp/android_backup/
-          cp android/app/src/main/AndroidManifest.xml /tmp/android_backup/
+          FLUTTER_DIR=$(dirname $(dirname $(which flutter)))
+          echo "Flutter directory: $FLUTTER_DIR"
 
-          flutter create . --platforms android --org org.remoteone
-
-          cp -r /tmp/android_backup/kotlin/* android/app/src/main/kotlin/
-          cp /tmp/android_backup/AndroidManifest.xml android/app/src/main/AndroidManifest.xml
-
-          sed -i 's/signingConfig = signingConfigs.debug/signingConfig = signingConfigs.debug/g' android/app/build.gradle
-          sed -i 's/signingConfig signingConfigs.release/signingConfig signingConfigs.debug/g' android/app/build.gradle || true
+          mkdir -p android/gradle/wrapper
+          if [ -f "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew" ]; then
+            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew" android/
+            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradlew.bat" android/
+            cp "$FLUTTER_DIR/packages/flutter_tools/templates/app_shared/android.tmpl/gradle/wrapper/gradle-wrapper.jar.tmpl" android/gradle/wrapper/gradle-wrapper.jar
+            chmod +x android/gradlew
+          fi
 
           flutter pub get
           flutter build apk --release
