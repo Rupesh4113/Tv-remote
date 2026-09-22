@@ -34,8 +34,8 @@ jobs:
           cache: true
 
       - name: Setup Gradle Wrapper and Build Release APK
+        working-directory: mobile
         run: |
-          cd mobile
           mkdir -p android/gradle/wrapper
 
           # Download official gradle-wrapper.jar if not present
@@ -53,25 +53,32 @@ jobs:
           chmod +x android/gradlew || true
 
           flutter pub get
-          flutter build apk --release -v 2>&1 | tee build.log || {
-            echo "### Build Failed Details" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            tail -n 120 build.log >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            exit 1
-          }
+          flutter build apk --release
 
-          cd ..
+          echo "Searching for built APKs:"
+          find build -name "*.apk" -ls
+
+      - name: Stage Release APK
+        run: |
           mkdir -p release-apk
-          find mobile/build -name "*.apk" -exec cp {} release-apk/app-release.apk \;
-          echo "Generated APK Files:"
-          ls -lh release-apk/
+          APK_FILE=$(find mobile/build -type f -name "app-release.apk" | head -n 1)
+          if [ -z "$APK_FILE" ]; then
+            APK_FILE=$(find mobile/build -type f -name "*.apk" | head -n 1)
+          fi
+          if [ -z "$APK_FILE" ]; then
+            echo "ERROR: No APK found in mobile/build"
+            exit 1
+          fi
+          echo "Selected APK: $APK_FILE"
+          cp "$APK_FILE" release-apk/app-release.apk
+          ls -lh release-apk/app-release.apk
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
           name: remoteone-release-apk
           path: release-apk/app-release.apk
+          if-no-files-found: error
 
       - name: Attach APK to GitHub Release
         uses: softprops/action-gh-release@v2
@@ -94,6 +101,7 @@ jobs:
           draft: false
           prerelease: false
           make_latest: true
+          fail_on_unmatched_files: true
           files: release-apk/app-release.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
