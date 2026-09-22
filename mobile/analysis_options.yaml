@@ -6,3 +6,7 @@ analyzer:
     unused_import: warning
     unused_local_variable: warning
     deprecated_member_use: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**

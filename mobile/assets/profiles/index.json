@@ -72,6 +72,20 @@
     "file": "stb-hathway-cable.json"
   },
   {
+    "id": "stb-jio-fiber",
+    "brand": "Jio",
+    "category": "SET_TOP_BOX",
+    "model": "JioFiber 4K Set-Top Box (Hybrid IR / IP)",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR",
+      "WIFI",
+      "BLUETOOTH"
+    ],
+    "file": "stb-jio-fiber.json"
+  },
+  {
     "id": "stb-sun-direct",
     "brand": "Sun Direct",
     "category": "SET_TOP_BOX",
@@ -106,6 +120,19 @@
       "IR"
     ],
     "file": "stb-videocon-d2h.json"
+  },
+  {
+    "id": "tv-bpl-smart",
+    "brand": "BPL",
+    "category": "TV",
+    "model": "Smart LED TV (Android / IR Hybrid)",
+    "region": "India",
+    "version": "1.0.0",
+    "supported_transports": [
+      "IR",
+      "WIFI"
+    ],
+    "file": "tv-bpl-smart.json"
   },
   {
     "id": "tv-generic-ir",

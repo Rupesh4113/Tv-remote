@@ -7,6 +7,7 @@ import '../../services/remote_controller.dart';
 import '../../services/voice_command_service.dart';
 import 'add_device_wizard.dart';
 import 'combined_remote_screen.dart';
+import 'find_remote_screen.dart';
 import 'learning_mode_screen.dart';
 import 'macros_screen.dart';
 import 'settings_screen.dart';
@@ -231,18 +232,28 @@ class _HomeScreenState extends State<HomeScreen> {
       const StbRemoteScreen(),
       const CombinedRemoteScreen(),
       _buildDevicesListTab(storage, controller),
+      const FindRemoteScreen(),
+    ];
+
+    final titles = [
+      'TV Remote',
+      'Set-Top Box',
+      'Combined Remote',
+      'My Devices',
+      'Find My Remote',
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          _currentTabIndex == 0
-              ? 'TV Remote'
-              : (_currentTabIndex == 1
-                  ? 'Set-Top Box'
-                  : (_currentTabIndex == 2 ? 'Combined Remote' : 'My Devices')),
-        ),
+        title: Text(titles[_currentTabIndex]),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.radar, color: Color(0xFF00E5FF)),
+            tooltip: 'Find My Remote',
+            onPressed: () {
+              setState(() => _currentTabIndex = 4);
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.mic, color: Color(0xFF00E5FF)),
             tooltip: 'Voice Control',
@@ -300,6 +311,10 @@ class _HomeScreenState extends State<HomeScreen> {
           NavigationDestination(
             icon: Icon(Icons.devices_other_rounded),
             label: 'Devices',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.radar_rounded),
+            label: 'Find Remote',
           ),
         ],
       ),

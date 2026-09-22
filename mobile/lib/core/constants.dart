@@ -12,7 +12,7 @@ class AppConstants {
   ];
 
   static const List<String> stbProviders = [
-    'Tata Play', 'Airtel Digital TV', 'Dish TV', 'd2h', 'Sun Direct',
+    'Jio', 'Tata Play', 'Airtel Digital TV', 'Dish TV', 'd2h', 'Sun Direct',
     'DD Free Dish', 'Den Networks', 'Hathway', 'GTPL', 'Siti Cable',
     'Asianet', 'Generic Cable Box'
   ];

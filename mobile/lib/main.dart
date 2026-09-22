@@ -4,6 +4,7 @@ import 'core/app_theme.dart';
 import 'core/constants.dart';
 import 'data/database/storage_service.dart';
 import 'services/combined_remote_service.dart';
+import 'services/finder_beacon_service.dart';
 import 'services/macro_runner.dart';
 import 'services/remote_controller.dart';
 import 'services/voice_command_service.dart';
@@ -34,6 +35,7 @@ void main() async {
   final combinedService = CombinedRemoteService(remoteController: remoteController);
   final macroRunner = MacroRunner(remoteController: remoteController, storageService: storageService);
   final voiceService = VoiceCommandService(remoteController: remoteController);
+  final finderBeaconService = FinderBeaconService();
 
   runApp(
     MultiProvider(
@@ -46,6 +48,7 @@ void main() async {
         ChangeNotifierProvider<CombinedRemoteService>.value(value: combinedService),
         ChangeNotifierProvider<MacroRunner>.value(value: macroRunner),
         ChangeNotifierProvider<VoiceCommandService>.value(value: voiceService),
+        ChangeNotifierProvider<FinderBeaconService>.value(value: finderBeaconService),
       ],
       child: const RemoteOneApp(),
     ),

@@ -1,0 +1,51 @@
+{
+  "id": "tv-bpl-smart",
+  "brand": "BPL",
+  "category": "TV",
+  "model": "Smart LED TV (Android / IR Hybrid)",
+  "region": "India",
+  "version": "1.0.0",
+  "supported_transports": ["IR", "WIFI"],
+  "ir_config": {
+    "protocol": "NEC",
+    "carrier_frequency_hz": 38000,
+    "customer_code": "0xBF00"
+  },
+  "wifi_config": {
+    "adapter": "android_tv",
+    "default_port": 5555,
+    "auth_required": false
+  },
+  "commands": {
+    "POWER": { "label": "Power", "ir_hex": "0xBF0000FF", "wifi_payload": { "key": "KEY_POWER" } },
+    "VOLUME_UP": { "label": "Volume +", "ir_hex": "0xBF0001FE", "wifi_payload": { "key": "KEY_VOLUMEUP" } },
+    "VOLUME_DOWN": { "label": "Volume -", "ir_hex": "0xBF0002FD", "wifi_payload": { "key": "KEY_VOLUMEDOWN" } },
+    "MUTE": { "label": "Mute", "ir_hex": "0xBF0003FC", "wifi_payload": { "key": "KEY_MUTE" } },
+    "CHANNEL_UP": { "label": "Channel +", "ir_hex": "0xBF0004FB", "wifi_payload": { "key": "KEY_CHANNELUP" } },
+    "CHANNEL_DOWN": { "label": "Channel -", "ir_hex": "0xBF0005FA", "wifi_payload": { "key": "KEY_CHANNELDOWN" } },
+    "DPAD_UP": { "label": "Up", "ir_hex": "0xBF0006F9", "wifi_payload": { "key": "KEY_UP" } },
+    "DPAD_DOWN": { "label": "Down", "ir_hex": "0xBF0007F8", "wifi_payload": { "key": "KEY_DOWN" } },
+    "DPAD_LEFT": { "label": "Left", "ir_hex": "0xBF0008F7", "wifi_payload": { "key": "KEY_LEFT" } },
+    "DPAD_RIGHT": { "label": "Right", "ir_hex": "0xBF0009F6", "wifi_payload": { "key": "KEY_RIGHT" } },
+    "DPAD_OK": { "label": "OK", "ir_hex": "0xBF000AF5", "wifi_payload": { "key": "KEY_ENTER" } },
+    "HOME": { "label": "Home", "ir_hex": "0xBF000BF4", "wifi_payload": { "key": "KEY_HOME" } },
+    "BACK": { "label": "Back", "ir_hex": "0xBF000CF3", "wifi_payload": { "key": "KEY_BACK" } },
+    "SOURCE": { "label": "Source", "ir_hex": "0xBF000DF2", "wifi_payload": { "key": "KEY_SOURCE" } },
+    "MENU": { "label": "Menu", "ir_hex": "0xBF000EF1", "wifi_payload": { "key": "KEY_MENU" } },
+    "EXIT": { "label": "Exit", "ir_hex": "0xBF000FF0", "wifi_payload": { "key": "KEY_EXIT" } },
+    "INFO": { "label": "Info", "ir_hex": "0xBF0010EF", "wifi_payload": { "key": "KEY_INFO" } },
+    "NETFLIX": { "label": "Netflix", "wifi_payload": { "app_id": "com.netflix.ninja" } },
+    "YOUTUBE": { "label": "YouTube", "wifi_payload": { "app_id": "com.google.android.youtube.tv" } },
+    "PRIME_VIDEO": { "label": "Prime Video", "wifi_payload": { "app_id": "com.amazon.amazonvideo.livingroom" } },
+    "NUM_0": { "label": "0", "ir_hex": "0xBF0011EE", "wifi_payload": { "key": "KEY_0" } },
+    "NUM_1": { "label": "1", "ir_hex": "0xBF0012ED", "wifi_payload": { "key": "KEY_1" } },
+    "NUM_2": { "label": "2", "ir_hex": "0xBF0013EC", "wifi_payload": { "key": "KEY_2" } },
+    "NUM_3": { "label": "3", "ir_hex": "0xBF0014EB", "wifi_payload": { "key": "KEY_3" } },
+    "NUM_4": { "label": "4", "ir_hex": "0xBF0015EA", "wifi_payload": { "key": "KEY_4" } },
+    "NUM_5": { "label": "5", "ir_hex": "0xBF0016E9", "wifi_payload": { "key": "KEY_5" } },
+    "NUM_6": { "label": "6", "ir_hex": "0xBF0017E8", "wifi_payload": { "key": "KEY_6" } },
+    "NUM_7": { "label": "7", "ir_hex": "0xBF0018E7", "wifi_payload": { "key": "KEY_7" } },
+    "NUM_8": { "label": "8", "ir_hex": "0xBF0019E6", "wifi_payload": { "key": "KEY_8" } },
+    "NUM_9": { "label": "9", "ir_hex": "0xBF001AE5", "wifi_payload": { "key": "KEY_9" } }
+  }
+}
