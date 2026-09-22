@@ -34,8 +34,8 @@ jobs:
           cache: true
 
       - name: Setup Gradle Wrapper and Build Release APK
-        working-directory: mobile
         run: |
+          cd mobile
           mkdir -p android/gradle/wrapper
 
           # Download official gradle-wrapper.jar if not present
@@ -55,22 +55,10 @@ jobs:
           flutter pub get
           flutter build apk --release
 
-          echo "Searching for built APKs:"
-          find build -name "*.apk" -ls
-
-      - name: Stage Release APK
-        run: |
+          cd ..
           mkdir -p release-apk
-          APK_FILE=$(find mobile/build -type f -name "app-release.apk" | head -n 1)
-          if [ -z "$APK_FILE" ]; then
-            APK_FILE=$(find mobile/build -type f -name "*.apk" | head -n 1)
-          fi
-          if [ -z "$APK_FILE" ]; then
-            echo "ERROR: No APK found in mobile/build"
-            exit 1
-          fi
-          echo "Selected APK: $APK_FILE"
-          cp "$APK_FILE" release-apk/app-release.apk
+          cp mobile/build/app/outputs/flutter-apk/app-release.apk release-apk/app-release.apk
+          echo "Generated Release APK:"
           ls -lh release-apk/app-release.apk
 
       - name: Upload APK as Workflow Artifact
