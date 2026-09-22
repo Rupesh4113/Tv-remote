@@ -6,10 +6,21 @@
 
 [![CI Test Suite](https://github.com/Rupesh4113/Tv-remote/actions/workflows/test.yml/badge.svg)](https://github.com/Rupesh4113/Tv-remote/actions/workflows/test.yml)
 [![Android Build](https://github.com/Rupesh4113/Tv-remote/actions/workflows/android-build.yml/badge.svg)](https://github.com/Rupesh4113/Tv-remote/actions/workflows/android-build.yml)
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS-green.svg)](#)
+[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20iOS%20%7C%20Web-green.svg)](#)
 
 </div>
+
+---
+
+### 🌐 Live Streamlit Web Remote
+Run or deploy the full interactive Universal Web Remote directly in your browser:
+```bash
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+Or deploy in 1-click on [Streamlit Community Cloud](https://share.streamlit.io) with zero setup! See [docs/STREAMLIT_DEPLOYMENT.md](docs/STREAMLIT_DEPLOYMENT.md).
 
 ---
 
