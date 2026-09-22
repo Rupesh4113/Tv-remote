@@ -1,6 +1,31 @@
 version: '3.8'
 
 services:
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONPATH=/app
+      - LOCAL_AGENT_URL=http://local_agent:8765
+    depends_on:
+      - local_agent
+    restart: unless-stopped
+
+  local_agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: python -m remote_agent.agent --host 0.0.0.0 --port 8765
+    ports:
+      - "8765:8765"
+    environment:
+      - PYTHONPATH=/app
+    restart: unless-stopped
+
   backend:
     build:
       context: .
@@ -18,7 +43,7 @@ services:
       dockerfile: Dockerfile
     command: python -m backend.simulator.runner
     ports:
-      - "8080:8080" # Dashboard
+      - "8080:8080" # Simulator Dashboard
       - "8081:8081" # Mock Samsung Tizen WS
       - "8082:8082" # Mock LG webOS SSAP WS
       - "8083:8083" # Mock Sony Bravia IRCC HTTP
